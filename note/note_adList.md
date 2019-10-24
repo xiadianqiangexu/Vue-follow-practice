@@ -2,6 +2,7 @@
     <div class="clearfix">
         <div class="fl ad-left">
             <a :href="data[0] && data[0].href">
+            //当数据存在时才将数据传递给参数
                 <img class="ad-img" :src="data[0] && data[0].imgUrl" alt="">
             </a>
         </div>

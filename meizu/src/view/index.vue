@@ -25,16 +25,20 @@
         <div class="index-contain">
             <div class="sale">
                 <h3 class="title">手机</h3>
+                <v-adList :data="phoneAdData"></v-adList>
                 <v-goodslist :data="phoneSaleData"></v-goodslist>
             </div>
         </div>
         <div class="index-contain">
             <div class="sale">
                 <h3 class="title">智能配件</h3>
+                <v-adList :data="smartAdData"></v-adList>
                 <v-goodslist :data="smartSaleData"></v-goodslist>
             </div>
         </div>
-        <div class="footer"></div>
+        <div class="footer">
+            <v-footer></v-footer>
+        </div>
     </div>
 </template>
 <script>
@@ -42,13 +46,17 @@ import axios from 'axios'
 import Header from '../components/header.vue'
 import Swiper from '../components/swiper.vue'
 import goodsList from '../components/goodsList.vue'
+import adList from '../components/adList.vue'
+import vFooter from '../components/footer.vue'
 
 export default {
     name:'index',
     components:{
         'v-header':Header,
         'v-swiper':Swiper,
-        'v-goodslist':goodsList
+        'v-goodslist':goodsList,
+        'v-adList':adList,
+        'v-footer':vFooter,
     },
     data() {
         return {
@@ -57,7 +65,9 @@ export default {
             postData:[],
             hotSaleData:[],
             phoneSaleData:[],
-            smartSaleData:[]
+            smartSaleData:[],
+            phoneAdData:[],
+            smartAdData:[],
         }
     },
     mounted() {
@@ -67,6 +77,8 @@ export default {
         this.getHotSaleData()
         this.getphoneSaleData()
         this.getsmartSaleData()
+        this.getphoneAdData()
+        this.getsmartAdData()
     },
     methods: {
         async getSwiperData(){
@@ -95,6 +107,14 @@ export default {
         async getsmartSaleData(){
             const { data } =await axios.get('/api/smartSale')
             this.smartSaleData = data
+        },
+        async getphoneAdData(){
+            const { data } =await axios.get('/api/phoneRecommend')
+            this.phoneAdData = data
+        },
+        async getsmartAdData(){
+            const { data } =await axios.get('/api/smartRecommend')
+            this.smartAdData = data
         },
     },
 }
