@@ -9,8 +9,10 @@
                 <span class="arrow"> > </span>
                 <span class="last-bread">手机</span>
             </div>
-            <v-filter :data="filterListData" @filter="getResult"></v-filter>
-            <v-category :data="categoryListData"></v-category>
+            <v-filter :data="filterListData" @filter="getQuery"></v-filter>
+            <v-sort @getKey="getSortKey" @getStock="getSortStock"></v-sort>
+            <v-category @clickItem="goToDetail" :data="categoryListData"></v-category>
+            <v-recommend :data="recommendListData"></v-recommend>
         </div>
         <v-footer></v-footer>
     </div>
@@ -22,6 +24,8 @@ import Header from '../components/header.vue'
 import vFooter from '../components/footer.vue'
 import categoryList from '../components/categoryList.vue'
 import filterBox from '../components/filterBox.vue'
+import sortBox from '../components/sortBox.vue'
+import recommendList from '../components/recommendList.vue'
 
 export default {
     name:'category',
@@ -30,12 +34,18 @@ export default {
         'v-footer':vFooter,
         'v-category':categoryList,
         'v-filter':filterBox,
+        'v-sort':sortBox,
+        'v-recommend':recommendList,
     },
     data() {
         return {
             categoryListData:[],
             filterListData:[],
             categoryListCopy:[],
+            recommendListData:[],
+            currentQuery:null,
+            currentKey:null,
+            currentStock:null,
         }
     },
     methods: {
@@ -50,18 +60,79 @@ export default {
             this.filterListData = data
             
         },
-        getResult(val){
+        async getrecommendListData(){
+            const { data } = await axios.get('/api/smartSale')
+            this.recommendListData = data
+            
+        },
+        getQuery(val)
+        {
+            this.currentQuery = val
+            this.sortGoods()
+        },
+        getSortKey(key){
+            this.currentKey = key
+            this.sortGoods()
+        },
+        getSortStock(val){
+            this.currentStock = val
+            this.sortGoods()
+        },
+        sortGoods(){
             this.categoryListData = [].concat(this.categoryListCopy)
-            Object.keys(val).forEach((key)=>{
-                this.categoryListData = this.categoryListData.filter((item)=>{
-                    return item.features.indexOf(val[key]) >= 0
+                if(this.currentQuery){
+                    Object.keys(this.currentQuery).forEach((key)=>{
+                        if(this.currentQuery[key]) {
+                            this.categoryListData = this.categoryListData.filter((item)=>{
+                            return item.features.indexOf(this.currentQuery[key]) >= 0
+                        })
+                    }
                 })
+            }
+            if(this.currentStock)
+            {
+                this.categoryListData = this.categoryListData.filter((item)=>{
+                    return item.available
+                })
+            }
+            if(this.currentKey)
+            {
+                if(this.currentKey === 'recommend'){
+                this.categoryListData.sort((a,b)=>{
+                    return b.shelveTime - a.shelveTime
+                })
+                }else if(this.currentKey === 'new')
+                {
+                    this.categoryListData.sort((a,b)=>{
+                        return b.publishedTime - a.publishedTime
+                    })
+                }else if(this.currentKey === 'low')
+                {
+                    this.categoryListData.sort((a,b)=>{
+                        return b.goodsPrice - a.goodsPrice
+                    })
+                }else if(this.currentKey === 'high')
+                {
+                    this.categoryListData.sort((a,b)=>{
+                        return a.goodsPrice - b.goodsPrice
+                    })
+                }
+            }
+        },
+        goToDetail(item){
+            this.$router.push({
+                name:'Detail',
+                params:{
+                    id: item.id
+                }
             })
         }
     },
     mounted() {
         this.getCategoryListData()
         this.getfilterListData()
+        this.getrecommendListData()
+
     },
 }
 </script>
