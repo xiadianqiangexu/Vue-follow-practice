@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from '../view/index'
 import Category from '../view/category'
 import Detail from '../view/detail.vue'
+import Shopcart from '../view/shopcart'
 // import HelloWorld from '@/components/HelloWorld'
 
 
@@ -30,6 +31,11 @@ export default new Router({
       path:'/detail/:id',
       name:'Detail',
       component:Detail
+    },
+    {
+      path:'/shopcart',
+      name:'Shopcart',
+      component:Shopcart
     },
   ]
 })

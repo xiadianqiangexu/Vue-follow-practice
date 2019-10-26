@@ -62,11 +62,13 @@
             </div>
         </div>
         <v-footer></v-footer>
+        <v-dialog></v-dialog>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import vDialog from '../components/dialog'
 import vHeader from '../components/header'
 import vFooder from '../components/footer'
 import imageList from '../components/imageList'
@@ -77,11 +79,13 @@ export default {
         'v-header':vHeader,
         'v-footer':vFooder,
         'v-image':imageList,
+        'v-dialog':vDialog,
     },
     data() {
         return {
             infoData:{},
             purchaseQuantity:1,
+            dialogShow:false,
         }
     },
     methods: {
@@ -90,27 +94,34 @@ export default {
             //id是在router里路径最后的字符，名称可以变更
             this.infoData = data
         },
-        increase(){
+        increase (){
             this.purchaseQuantity = parseInt(this.purchaseQuantity) + 1
         },
-        decrease(){
+        decrease (){
             if(this.purchaseQuantity > 1)
             {
                 this.purchaseQuantity = parseInt(this.purchaseQuantity) - 1
             }
         },
-        addShopcart(){
+        addShopcart (){
             this.$store.commit('ADD_SHOPCART',{
                 data: this.infoData,
                 num: parseInt(this.purchaseQuantity)
             })
         },
-        purchase(){
+        purchase (){
             this.$store.commit('ADD_SHOPCART',{
                 data: this.infoData,
                 num: parseInt(this.purchaseQuantity)
             })
+            this.goToShopcart()
+        },
+        goToShopcart (){
+            this.$router.push({
+                name:'Shopcart'
+            })
         }
+        
     },
     mounted() {
         this.getDetail(this.$route.params.id)

@@ -19,7 +19,7 @@
 
 <script>
 export default {
-    name:'goods-list',
+    name: 'goods-list',
     props:{
         data: {
             type:Array,

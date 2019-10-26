@@ -11,3 +11,6 @@
 
 ### 对data中数据做处理忘记加this.
 + 没有加上this.前缀的数据在控制台会被报错，一般错误为该变量未被定义
+
+### "TypeError: handler.apply is not a function"
++ 重名
