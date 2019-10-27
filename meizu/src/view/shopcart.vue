@@ -50,7 +50,7 @@
                 </div>
                 <div class="fr">
                     <span>已优惠<span class="footer-number red">0.00</span>元，合计（不含运费）:<span class="footer-num red footer-total">￥{{checkedGoodsPrice}}</span></span>
-                    <a href="javascript:;" class="btn success" :class="{'cancel': checkedGoodsTotal <= 0}">去结算</a>
+                    <a href="javascript:;" class="btn success" :class="{'cancel': checkedGoodsTotal <= 0}" @click="goToOrder">去结算</a>
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
             </div>
         </div>
         <v-footer></v-footer>
-        <v-dialog :show.sync="dialogShow" title="提示" :width="500" @confirm="confirmDelete" @cancel="dialogShow = false">
+        <v-dialog :show.sync="dialogShow" title="提示" :height="120" :width="500" @confirm="confirmDelete" @cancel="dialogShow = false">
             <div style="height: 120px;line-height: 120px">您确定删除该商品吗？</div>
         </v-dialog>
     </div>
@@ -135,6 +135,11 @@ export default {
         confirmDelete (){
             this.DEL_SHOPCART(this.currentId)
             this.dialogShow = false
+        },
+        goToOrder (){
+            this.$router.push({
+                name:'Order'
+            })
         }
     },
 }

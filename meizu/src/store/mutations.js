@@ -55,6 +55,9 @@ const mutations = {
         state.shopcartData.forEach(item =>{
             item.checked = !checked
         })
+    },
+    REMOVE_GOODS(state){
+        state.shopcartData = state.shopcartData.filter(item => !item.checked)
     }
 
 };

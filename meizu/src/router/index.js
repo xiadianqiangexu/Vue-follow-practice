@@ -4,6 +4,7 @@ import Index from '../view/index'
 import Category from '../view/category'
 import Detail from '../view/detail.vue'
 import Shopcart from '../view/shopcart'
+import Order from '../view/order'
 // import HelloWorld from '@/components/HelloWorld'
 
 
@@ -37,5 +38,10 @@ export default new Router({
       name:'Shopcart',
       component:Shopcart
     },
+    {
+      path:'/order',
+      name:'Order',
+      component:Order
+    }
   ]
 })

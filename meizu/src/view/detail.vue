@@ -62,7 +62,12 @@
             </div>
         </div>
         <v-footer></v-footer>
-        <v-dialog></v-dialog>
+        <v-dialog :show.sync="dialogShow" :confirm-button-show="false" :cancel-button-show="false" :width="360" :height="80">
+            <div>
+                <i class="icon-font icon-check-circle add-success"></i>成功加入购物车
+            </div>
+            <a href="javascript:;" @click="goToShopcart" class="go-shopcart">进入购物车</a>
+        </v-dialog>
     </div>
 </template>
 
@@ -107,7 +112,8 @@ export default {
             this.$store.commit('ADD_SHOPCART',{
                 data: this.infoData,
                 num: parseInt(this.purchaseQuantity)
-            })
+            }),
+            this.dialogShow = true
         },
         purchase (){
             this.$store.commit('ADD_SHOPCART',{
@@ -269,5 +275,15 @@ export default {
     
     .bg-white{
         background-color: white;
+    }
+
+    .add-success{
+        color:#00c3f5;
+        margin-right: 5px;
+    }
+
+    .go-shopcart{
+        color:#00c3f5;
+        text-decoration: underline;
     }
 </style>
