@@ -14,3 +14,10 @@
 
 ### "TypeError: handler.apply is not a function"
 + 重名
+
+### 路径相关
++ 路径
+    ```
+        在js文件中上级目录是./
+        在vue文件中上级目录是../
+    ```    
