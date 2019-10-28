@@ -1,34 +1,35 @@
-<pre>
-    <template>
-        <div class="clearfix">
-            <div class="fl ad-left">
-                <a :href="data[0] && data[0].href">
-                //当数据存在时才将数据传递给参数
-                    <img class="ad-img" :src="data[0] && data[0].imgUrl" alt="">
+```
+<template>
+    <div class="clearfix">
+        <div class="fl ad-left">
+            <a :href="data[0] && data[0].href">
+            //当数据存在时才将数据传递给参数
+                <img class="ad-img" :src="data[0] && data[0].imgUrl" alt="">
+            </a>
+        </div>
+        <div class="fr ad-right-top">
+            <div>
+                <a :href="data[1] && data[1].href">
+                    <img class="ad-img" :src="data[1] && data[1].imgUrl" alt="">
                 </a>
             </div>
-            <div class="fr ad-right-top">
-                <div>
-                    <a :href="data[1] && data[1].href">
-                        <img class="ad-img" :src="data[1] && data[1].imgUrl" alt="">
+            <div class="clearfix">
+                <div class="fl ad-right-bottom">
+                    <a :href="data[2] && data[2].href">
+                        <img class="ad-img" :src="data[2] && data[2].imgUrl" alt="">
                     </a>
                 </div>
-                <div class="clearfix">
-                    <div class="fl ad-right-bottom">
-                        <a :href="data[2] && data[2].href">
-                            <img class="ad-img" :src="data[2] && data[2].imgUrl" alt="">
-                        </a>
-                    </div>
-                    <div class="fr ad-right-bottom">
-                        <a :href="data[3] && data[3].href">
-                            <img class="ad-img" :src="data[3] && data[3].imgUrl" alt="">
-                        </a>
-                    </div>
+                <div class="fr ad-right-bottom">
+                    <a :href="data[3] && data[3].href">
+                        <img class="ad-img" :src="data[3] && data[3].imgUrl" alt="">
+                    </a>
                 </div>
             </div>
         </div>
-    </template>
-<pre>
+    </div>
+</template>
+```
+```
 <script>
 export default {
     name:'ad-list',
@@ -62,3 +63,4 @@ export default {
         height:100%;
     }
 </style>
+```
